@@ -32,7 +32,17 @@ const server = new ApolloServer({
       typeDefs,
       resolvers
     }
-  ])
+  ]),
+  context: ({ req }) => {
+  const myHeaders = req.headers
+                for (const key in myHeaders) {
+                    const value = myHeaders[key];
+                    console.log('Request header ' + key + ' with value ' + value);
+                }
+      return {
+        headers: req.headers
+       };
+    }
 });
 
 server.listen({ port: 4001 }).then(({ url }) => {
